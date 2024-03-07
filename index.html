@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <table id="data-table" class="table">
+        <thead>
+            <tr>
+                <th>Ticker</th>
+                <th>Price</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        const apiKey = 'MD0ACNJ6QY9SQTZ0'; // replace with your Alpha Vantage API key
+        const symbol = 'TSLA'; // replace with the symbol you want to get data for
+
+        fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${apiKey}`)
+
+            .then(response => response.json())
+            .then(data => {
+                const table = document.getElementById('data-table');
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${item.ticker}</td><td>${item.price}</td>`;
+                    table.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
